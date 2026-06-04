@@ -15,7 +15,8 @@ public class PakFileValidator {
 	public PakFileValidator(File f) throws IOException {
 		raf = new RandomAccessFile(f, "r");
 		numContents = ValueHandler.getVal(raf, true);
-		if (numContents < 0) bigEndian = true;
+		if (numContents < 0) bigEndian = false;
+		else bigEndian = true;
 		raf.seek(0);
 		numContents = ValueHandler.getVal(raf, bigEndian);
 		raf.seek((numContents + 1) * 4);
