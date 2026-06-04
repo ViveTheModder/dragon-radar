@@ -1,0 +1,19 @@
+pos,name,tooltip
+40,No. Ki Units (Passive Regen.),The number of passively generated Ki units.
+44,No. Ki Units (Guard Crush Recovery),The number of Ki units generated during recovery from a Guard Crush.
+48,Active Ki Regen. Speed (KU/s),The number of Ki units per second generated when charging Ki with L3.
+52,Underwater Ki Regen. Speed (KU/s),The number of Ki units per second generated when charging Ki with L3 underwater.
+56,Passive Ki Regen. Speed (KU/s),The number of passively generated Ki units per second.
+60,Guard Crush Recovery Speed (KU/s),The number of Ki units per second generated when recovering from a Guard Crush.
+68,Blast Stock Regen. Speed (BSU/s),The number of Blast Stock units generated every second.
+72,No. Ki Units (Quick Recovery),The number of Ki bars drained after quickly recovering from a Smash Attack.
+76,Auto-Counter Ki Drain Speed (KU/s),The number of Ki units per second subtracted when performing an Auto-Counter.
+80,MAX Power Mode Ki Charge Duration (s),The duration (in seconds) of charging up to MAX Power Mode.
+84,MAX Power Mode Duration (s),The duration (in seconds) of "blue Ki" during or before MAX Power Mode.
+96,Smash Attack Knockback Duration (s),The duration (in seconds) of the knockback received from an enemy Smash Attack.
+100,Full Switch Stock Fill Duration (s),The time (in seconds) required to fill up the Switch Stock from empty to full.
+104,Momentum Ratio (Side Step),A coefficient that can make side stepping end sooner. Recommended Values: 0-1.
+108,Momentum Ratio (Back Step),A coefficient that can make back stepping end sooner. Recommended Values: 0-1.
+116,Initial Momentum Multiplier,A coefficient that is multiplied by the inverse of the base momentum ratio (1 - ratio).
+120,Additional Momentum Multiplier,A coefficient that is multiplied by the base momentum ratio (which ranges from 0 to 1).
+124,Enemy Damage Multiplier,A coefficient that is multipled by the currently dealt damage from an enemy.
