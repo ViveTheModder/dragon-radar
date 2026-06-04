@@ -91,7 +91,7 @@ public class Main {
 					PakFileValidator fv = new PakFileValidator(pak);
 					bigEndian = fv.isBigEndian();
 					if (fv.isCharaContainer()) ParamFileRetriever.writeCommonParamsFromContainer(pak, args[2], cfgVals[2], cfgVals[1], bigEndian);
-					else if (fv.isCharaCostume()) ParamFileRetriever.writeCommonParamsFromCostume(pak, args[2], cfgVals[1], cfgVals[1], bigEndian);
+					else if (fv.isCharaCostume()) ParamFileRetriever.writeCommonParamsFromCostume(pak, args[2], cfgVals[0], cfgVals[1], bigEndian);
 				}
 			}
 			else if (args[0].equals("-r")) {

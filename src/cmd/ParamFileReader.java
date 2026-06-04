@@ -11,7 +11,8 @@ public class ParamFileReader {
 	
 	public ParamFileReader(File f, boolean be) throws IOException {
 		bigEndian = be;
-		charaName = Main.getCharaName(f.getName().replace("common_param", ""));
+		charaName = f.getName();
+		charaName = Main.getCharaName(charaName.substring(0, charaName.indexOf("_param")));
 		param = new RandomAccessFile(f, "r");
 	}
 	
