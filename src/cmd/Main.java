@@ -34,10 +34,10 @@ public class Main {
 		int lastUnderscoreInName = pakName.lastIndexOf("_");
 		return pakName.substring(0, lastUnderscoreInName);
 	}
-	public static void writeParamInfoToCsv(File[] dats, boolean bigEndian) throws IOException {
+	public static void writeParamInfoToCsv(File[] dats, String paramType, boolean bigEndian) throws IOException {
 		String csvText = ",";
 		File[] csvFiles = CsvHandler.getAvailableCsvFiles();
-		int searchResult = CsvHandler.getCsvSearchResult(csvFiles, "common-params");
+		int searchResult = CsvHandler.getCsvSearchResult(csvFiles, paramType);
 		if (searchResult < 0) return;
 		String[] lines = CsvHandler.getLines(csvFiles[searchResult]);
 		String[] paramNames = new String[lines.length];
@@ -47,7 +47,7 @@ public class Main {
 			positions[posCnt] = Integer.parseUnsignedInt(lineArray[0]);
 			paramNames[posCnt] = lineArray[1];
 		}		
-		for (File dat: dats) csvText += getCharaName(dat.getName().replace("common_param", "")) + ",";
+		for (File dat: dats) csvText += getCharaName(dat.getName().replace(paramType, "")) + ",";
 		csvText += "\n";
 		for (int posCnt = 0; posCnt < positions.length; posCnt++) {
 			csvText += paramNames[posCnt] + ",";
@@ -106,7 +106,7 @@ public class Main {
 				File paramFolder = new File(args[1]);
 				File[] dats = paramFolder.listFiles((dir, name) -> name.endsWith("_" + args[2] + ".dat"));
 				System.out.print("Writing parameter info to CSV...");
-				writeParamInfoToCsv(dats, cfgVals[3] == 1);
+				writeParamInfoToCsv(dats, args[2], cfgVals[3] == 1);
 				System.out.println(" DONE!");
 			}
 		}
