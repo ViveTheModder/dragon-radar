@@ -1,0 +1,19 @@
+pos,name,tooltip
+0,Speed (Long Range),The character's speed when moving with the D-PAD away from their opponent.
+4,Underwater Speed (Long Range),The character's underwater speed when moving with the D-PAD away from their opponent.
+8,Speed (Close Range),The character's speed when approaching their opponent with the D-PAD.
+12,Underwater Speed (Close Range),The character's underwater speed when approaching their opponent with the D-PAD.
+16,Dash Speed,The character's speed when dashing (X).
+20,Underwater Dash Speed,The character's speed when dashing underwater (X). 
+24,Dragon Dash Speed,The character's horizontal speed when Dragon Dashing (L2 + X) directly towards their opponent.
+28,Free Dragon Dash Speed,The character's horizontal speed when doing a Dragon Dash (L2 + X) freely.
+32,Vertical Free Dragon Dash Speed,The character's vertical speed when doing a Dragon Dash (L2 + X) freely.
+36,Vertical Dragon Dash Speed,The character's vertical speed when Dragon Dashing (L2 + X) directly towards their opponent.
+64,Ascending Speed,The character's speed when moving upwards (R1).
+68,Descending Speed,The character's speed when moving downwards (R2).
+76,Z-Burst Dash Speed,The character's speed when performing a Z-Burst Dash.
+80,Dragon Ascend Speed,The character's speed when quickly moving upwards (R1 + R1).
+84,Dragon Descend Speed,The character's speed when quickly moving downwards (R2 + R2). 
+116,Dash Velocity,The character's directional speed (when holding DOWN, LEFT or RIGHT).
+120,Jumping Speed,The character's speed when jumping from the ground (R1).
+124,Dragon Dash Velocity,The character's directional speed when doing a Dragon Dash (when holding DOWN, LEFT or RIGHT).
