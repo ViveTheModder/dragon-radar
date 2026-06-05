@@ -72,14 +72,25 @@ public class Main {
 		};
 		if (args.length > 2) {
 			int[] cfgVals = null;
+			File folder = new File(args[1]);
 			if (!args[2].equals("")) cfgVals = Main.getParamCfgVals(args[2]);
 			if (cfgVals == null) {
 				System.out.println("Configuration file belonging to the parameter type is either empty or not present!");
 				return;
 			}
+			if (!folder.isDirectory()) {
+				System.out.println("Provided directory is not a folder!");
+				return;
+			}
+			else {
+				if (args[1].toUpperCase().equals("N")) folder = new File("./res/prm/");
+				if (!folder.exists()) {
+					System.out.println("Default parameter directory (/res/prm/) does not exist!");
+					return;
+				}
+			}
 			if (args[0].equals("-w")) {
-				File pakFolder = new File(args[1]);
-				File[] paks = pakFolder.listFiles(new FilenameFilter() {
+				File[] paks = folder.listFiles(new FilenameFilter() {
 					@Override
 					public boolean accept(File dir, String name) {
 						boolean matchCostumeName = name.matches("[a-zA-Z0-9_]+_\\dp.pak") || name.matches("[a-zA-Z0-9_]+_\\dp_dmg.pak");
@@ -95,16 +106,14 @@ public class Main {
 				}
 			}
 			else if (args[0].equals("-r")) {
-				File paramFolder = new File(args[1]);
-				File[] dats = paramFolder.listFiles((dir, name) -> name.endsWith("_" + args[2] + ".dat"));
+				File[] dats = folder.listFiles((dir, name) -> name.endsWith("_" + args[2] + ".dat"));
 				for (File dat: dats) {
 					ParamFileReader pfr = new ParamFileReader(dat, bigEndian);
 					System.out.println("[" + dat.getName() + "]\n" + pfr.readParamInfo(args[2]));
 				}
 			}
 			else if (args[0].equals("-csv")) {
-				File paramFolder = new File(args[1]);
-				File[] dats = paramFolder.listFiles((dir, name) -> name.endsWith("_" + args[2] + ".dat"));
+				File[] dats = folder.listFiles((dir, name) -> name.endsWith("_" + args[2] + ".dat"));
 				System.out.print("Writing parameter info to CSV...");
 				writeParamInfoToCsv(dats, args[2], cfgVals[3] == 1);
 				System.out.println(" DONE!");

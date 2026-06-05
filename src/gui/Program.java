@@ -72,7 +72,8 @@ public class Program {
 				paramLbls[paramCnt].setMinimumSize(minLabelSize);
 				paramLbls[paramCnt].setMaximumSize(minLabelSize);
 				paramLbls[paramCnt].setPreferredSize(minLabelSize);
-				paramLbls[paramCnt].setToolTipText(paramDescs[paramCnt]);
+				if (!paramDescs[paramCnt].equals(" ")) 
+					paramLbls[paramCnt].setToolTipText(paramDescs[paramCnt]);
 				paramFields[paramCnt] = new JTextField();
 				paramFields[paramCnt].setBackground(Color.WHITE);
 				paramFields[paramCnt].setEditable(false);
@@ -113,7 +114,7 @@ public class Program {
 	}
 	public static void run() {
 		int[] cfgVals = null;
-		String paramType = "";
+		String[] paramType = { "" };
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -129,9 +130,9 @@ public class Program {
 			String[] paramTypes = new String[availableCfgs.length];
 			for (int cfgCnt = 0; cfgCnt < availableCfgs.length; cfgCnt++)
 				paramTypes[cfgCnt] = availableCfgs[cfgCnt].getName().replace(".cfg", "");
-			paramType = (String) JOptionPane.showInputDialog(null, msg, WINDOW_TITLE, JOptionPane.QUESTION_MESSAGE, new ImageIcon(img), paramTypes, null);
-			if (paramType == null) return;
-			cfgVals = Main.getParamCfgVals(paramType);
+			paramType[0] = (String) JOptionPane.showInputDialog(null, msg, WINDOW_TITLE, JOptionPane.QUESTION_MESSAGE, new ImageIcon(img), paramTypes, null);
+			if (paramType[0] == null) return;
+			cfgVals = Main.getParamCfgVals(paramType[0]);
 			if (cfgVals == null) {
 				error(tk);
 				String err = "Configuration file belonging to the parameter type is either empty or not present!";
@@ -149,7 +150,7 @@ public class Program {
 					JOptionPane.showMessageDialog(fc, "Provided directory is not a folder!", WINDOW_TITLE, JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				File[] dats = paramFolder.listFiles((dir, name) -> name.endsWith("_common_param.dat"));
+				File[] dats = paramFolder.listFiles((dir, name) -> name.endsWith("_" + paramType[0] + ".dat"));
 				if (dats.length == 0) {
 					error(tk);
 					JOptionPane.showMessageDialog(fc, "Folder contains no parameter files!", WINDOW_TITLE, JOptionPane.WARNING_MESSAGE);
@@ -159,7 +160,7 @@ public class Program {
 				for (int datCnt = 0; datCnt < dats.length; datCnt++)
 					readers[datCnt] = new ParamFileReader(dats[datCnt], cfgVals[3] == 1);
 				File[] csvFiles = CsvHandler.getAvailableCsvFiles();
-				int searchResult = CsvHandler.getCsvSearchResult(csvFiles, paramType);
+				int searchResult = CsvHandler.getCsvSearchResult(csvFiles, paramType[0]);
 				if (searchResult < 0) {
 					error(tk);
 					JOptionPane.showMessageDialog(fc, "Required CSV not found!", WINDOW_TITLE, JOptionPane.WARNING_MESSAGE);
@@ -170,9 +171,39 @@ public class Program {
 				for (int lineCnt = 0; lineCnt < lines.length; lineCnt++) {
 					String[] lineArray = lines[lineCnt].split(",");
 					paramNames[lineCnt] = lineArray[1];
-					paramDescs[lineCnt] = lineArray[2];
+					if (lineArray.length == 3) paramDescs[lineCnt] = lineArray[2];
+					else paramDescs[lineCnt] = " ";
 				}
-				init(readers, paramType, paramNames, paramDescs, img, tk);
+				init(readers, paramType[0], paramNames, paramDescs, img, tk);
+			}
+			else if (result == JFileChooser.CANCEL_OPTION) {
+				File defaultParamFolder = new File("./res/prm/" + paramType[0]);
+				if (defaultParamFolder.exists()) {
+					File[] dats = defaultParamFolder.listFiles((dir, name) -> name.endsWith("_" + paramType[0] + ".dat"));
+					if (dats.length == 0) {
+						error(tk);
+						JOptionPane.showMessageDialog(fc, "Default parameter folder (/res/prm/) contains no files!", WINDOW_TITLE, JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					ParamFileReader[] readers = new ParamFileReader[dats.length];
+					for (int datCnt = 0; datCnt < dats.length; datCnt++)
+						readers[datCnt] = new ParamFileReader(dats[datCnt], cfgVals[3] == 1);
+					File[] csvFiles = CsvHandler.getAvailableCsvFiles();
+					int searchResult = CsvHandler.getCsvSearchResult(csvFiles, paramType[0]);
+					if (searchResult < 0) {
+						error(tk);
+						JOptionPane.showMessageDialog(fc, "Required CSV not found!", WINDOW_TITLE, JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					String[] lines = CsvHandler.getLines(csvFiles[searchResult]);
+					String[] paramDescs = new String[lines.length], paramNames = new String[lines.length];
+					for (int lineCnt = 0; lineCnt < lines.length; lineCnt++) {
+						String[] lineArray = lines[lineCnt].split(",");
+						paramNames[lineCnt] = lineArray[1];
+						paramDescs[lineCnt] = lineArray[2];
+					}
+					init(readers, paramType[0], paramNames, paramDescs, img, tk);
+				}
 			}
 		}
 		catch (Exception e) {

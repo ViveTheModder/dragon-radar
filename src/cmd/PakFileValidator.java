@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class PakFileValidator {
-	private static final int NUM_CONTENTS_COSTUME = 252;
+	private static final int NUM_CONTENTS_COSTUME_BT2 = 250;
+	private static final int NUM_CONTENTS_COSTUME_BT3 = 252;
 	private static final int NUM_CONTENTS_CONTAINER = 3;
 	
 	private RandomAccessFile raf;
@@ -28,7 +29,7 @@ public class PakFileValidator {
 		return bigEndian;
 	}
 	public boolean isCharaCostume() {
-		return hasValidSize && (numContents == NUM_CONTENTS_COSTUME);
+		return hasValidSize && (numContents == NUM_CONTENTS_COSTUME_BT2 || numContents == NUM_CONTENTS_COSTUME_BT3);
 	}
 	public boolean isCharaContainer() {
 		return hasValidSize && (numContents == NUM_CONTENTS_CONTAINER);

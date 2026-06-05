@@ -1,6 +1,10 @@
 # dragon-radar
 A customizable parameter viewer and exporter for the Tenkaichi games (mainly 2 and 3, both PS2 and Wii versions), with CLI and GUI support.
 
+By design, it is only meant to detect integers (whole numbers) and floats (decimal numbers) from extracted parameter files. 
+
+Although, the tool does come with common and movement parameters from BT3.
+
 # Demonstration
 ## CLI
 <img width="1919" height="1021" alt="image" src="https://github.com/user-attachments/assets/e32b3ed7-7b32-4a40-b697-ffbcb09d0179" />
